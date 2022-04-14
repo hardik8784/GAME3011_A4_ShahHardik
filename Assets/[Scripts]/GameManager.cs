@@ -24,13 +24,16 @@ public class GameManager : MonoBehaviour
 
     public Canvas resultCanvas;
     public TMP_Text resultText;
+    public GameObject ExitButton;
 
     Controller controller;
 
     public GameObject easy;
+    public GameObject medium;
     public GameObject hard;
     // GameObject holding our pipes
     public GameObject pipeHolderEasy;
+    public GameObject pipeHolderMedium;
     public GameObject pipeHolderHard;
     GameObject pipeHolder;
     // Pipes being held
@@ -51,16 +54,25 @@ public class GameManager : MonoBehaviour
         controller = GameObject.FindObjectOfType<Controller>();
 
         // Set up which board will become active based on difficulty
-        if (controller.difficulty == 1 || controller.difficulty == 2)
+        if (controller.difficulty == 1 /*|| controller.difficulty == 2*/)
         {
             pipeHolder = pipeHolderEasy;
             easy.SetActive(true);
+            medium.SetActive(false);
+            hard.SetActive(false);
+        }
+        else if(controller.difficulty ==2)
+        {
+            pipeHolder = pipeHolderMedium;
+            easy.SetActive(false);
+            medium.SetActive(true);
             hard.SetActive(false);
         }
         else if (controller.difficulty == 3)
         {
             pipeHolder = pipeHolderHard;
             easy.SetActive(false);
+            medium.SetActive(false);
             hard.SetActive(true);
         }
 
@@ -141,6 +153,7 @@ public class GameManager : MonoBehaviour
             resultCanvas.enabled = true;
             resultText.text = "You lose!";
             Debug.Log("Time is up");
+            ExitButton.SetActive(true);
         }
     }
 
